@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Anamnese</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome CDN para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-50 p-8 font-sans text-gray-900">
+    <div class="max-w-3xl mx-auto">
+        <!-- Cabeçalho Principal -->
+        <div class="bg-blue-700 text-white rounded-xl shadow-md p-6 mb-6 text-center">
+            <h1 class="text-3xl font-bold">Ficha de Anamnese</h1>
+        </div>
+
+        <form id="anamneseForm" novalidate enctype="multipart/form-data" class="space-y-6">
+
+            <!-- 1. DADOS GERAIS -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-user-circle mr-3"></i> Identificação
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="nomeCompleto" class="block text-base text-gray-700 mb-1">Nome completo:</label>
+                        <input type="text" id="nomeCompleto" name="nomeCompleto" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="idade" class="block text-base text-gray-700 mb-1">Idade:</label>
+                        <input type="number" id="idade" name="idade" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-base text-gray-700 mb-1">Sexo:</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="sexoMasc" name="sexo" value="Masculino" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Masculino</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="sexoFem" name="sexo" value="Feminino" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Feminino</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="sexoOutro" name="sexo" value="Outro" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Outro</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="peso" class="block text-base text-gray-700 mb-1">Peso atual (kg):</label>
+                        <input type="number" id="peso" name="peso" step="0.1" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="altura" class="block text-base text-gray-700 mb-1">Altura (cm):</label>
+                        <input type="number" id="altura" name="altura" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="dataNascimento" class="block text-base text-gray-700 mb-1">Data de nascimento:</label>
+                        <input type="date" id="dataNascimento" name="dataNascimento" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-base text-gray-700 mb-1">E-mail:</label>
+                        <input type="email" id="email" name="email" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="telefone" class="block text-base text-gray-700 mb-1">Telefone:</label>
+                        <input type="tel" id="telefone" name="telefone" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="horaAcorda" class="block text-base text-gray-700 mb-1">Hora que acorda:</label>
+                        <input type="time" id="horaAcorda" name="horaAcorda" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="horaDorme" class="block text-base text-gray-700 mb-1">Hora que dorme:</label>
+                        <input type="time" id="horaDorme" name="horaDorme" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medidas Corporais Iniciais -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-ruler-combined mr-3"></i> Medidas Corporais Iniciais
+                </h2>
+                <p class="text-gray-700 mb-4">Siga as instruções para tirar as medidas corretamente.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="pescocoInicial" class="block text-base text-gray-700 mb-1">Pescoço (cm):</label>
+                        <input type="number" id="pescocoInicial" name="pescocoInicial" step="0.1" placeholder="Medir na altura do gogó" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label for="cinturaInicial" class="block text-base text-gray-700 mb-1">Cintura (cm):</label>
+                        <input type="number" id="cinturaInicial" name="cinturaInicial" step="0.1" placeholder="Medir na linha do umbigo" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div id="quadril-inicial-div" class="md:col-span-2" style="display: none;"> <!-- Apenas para mulheres -->
+                        <label for="quadrilInicial" class="block text-base text-gray-700 mb-1">Quadril (cm):</label>
+                        <input type="number" id="quadrilInicial" name="quadrilInicial" step="0.1" placeholder="Medir na parte mais larga dos glúteos" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fotos Iniciais -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-camera mr-3"></i> Fotos Iniciais
+                </h2>
+                <p class="text-gray-700 mb-4">As fotos são importantes para a avaliação visual inicial.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="fotoFrenteInicial" class="block text-base text-gray-700 mb-1">Foto de Frente:</label>
+                        <input type="file" id="fotoFrenteInicial" name="fotoFrenteInicial" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    <div>
+                        <label for="fotoLadoInicial" class="block text-base text-gray-700 mb-1">Foto de Lado:</label>
+                        <input type="file" id="fotoLadoInicial" name="fotoLadoInicial" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="fotoCostasInicial" class="block text-base text-gray-700 mb-1">Foto de Costas:</label>
+                        <input type="file" id="fotoCostasInicial" name="fotoCostasInicial" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. OBJETIVO E ROTINA -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-bullseye mr-3"></i> Objetivos e Rotina
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Qual seu principal objetivo?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="objEmagrecimento" name="objetivo" value="Emagrecimento" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Emagrecimento</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="objHipertrofia" name="objetivo" value="Hipertrofia" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Hipertrofia</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="objSaude" name="objetivo" value="Saúde" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Saúde</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="objReeducacao" name="objetivo" value="Reeducação alimentar" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Reeducação alimentar</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="objOutro" name="objetivo" value="Outro" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Outro</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Já tentou alguma dieta?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaLowCarb" name="dietaTentada" value="Low carb" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Low carb</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaCeto" name="dietaTentada" value="Cetogênica" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Cetogênica</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaJejum" name="dietaTentada" value="Jejum intermitente" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Jejum intermitente</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaTradicional" name="dietaTentada" value="Tradicional" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Tradicional</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaNenhuma" name="dietaTentada" value="Nenhuma" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Nenhuma</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="dietaOutra" name="dietaTentada" value="Outra" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Outra</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="resultadoDieta" class="block text-base text-gray-700 mb-1">Qual foi o resultado?</label>
+                        <textarea id="resultadoDieta" name="resultadoDieta" rows="4" required
+                                  class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Como está sua rotina atual?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="rotinaOrganizada" name="rotina" value="Organizada" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Organizada</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="rotinaRegular" name="rotina" value="Regular" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Regular</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="rotinaCorrida" name="rotina" value="Corrida" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Corrida</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="rotinaAleatoria" name="rotina" value="Aleatória" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Aleatória</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="rotinaPreso" name="rotina" value="Preso" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Preso</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. HÁBITOS E CONSUMOS -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-coffee mr-3"></i> Hábitos e Consumos
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="aguaPorDia" class="block text-base text-gray-700 mb-1">Quantidade de água por dia?</label>
+                        <select id="aguaPorDia" name="aguaPorDia" required
+                                class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Selecione...</option>
+                            <option value="Menos de 1 litro">Menos de 1 litro</option>
+                            <option value="1 litro">1 litro</option>
+                            <option value="2 litros">2 litros</option>
+                            <option value="3 litros">3 litros</option>
+                            <option value="+3 litros">+3 litros</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Usa alguma medicação?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="medSim" name="usaMedicacao" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="medNao" name="usaMedicacao" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="medicacaoDescricaoDiv" class="mt-4" style="display:none;">
+                            <label for="medicacaoDescricao" class="block text-base text-gray-700 mb-1">Se sim, qual?</label>
+                            <input type="text" id="medicacaoDescricao" name="medicacaoDescricao"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label class="block text-base text-gray-700 mt-4 mb-1">Tipo de medicamento:</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="medComprimido" name="medicacaoTipo" value="Comprimido" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Comprimido</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="medInjetavel" name="medicacaoTipo" value="Injetável" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Injetável</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="medFitoterapico" name="medicacaoTipo" value="Fitoterápico" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Fitoterápico</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="medOutro" name="medicacaoTipo" value="Outro" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Outro</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Usa anticoncepcional?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="acSim" name="usaAnticoncepcional" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="acNao" name="usaAnticoncepcional" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="anticoncepcionalTipoDiv" class="mt-4" style="display:none;">
+                            <label for="anticoncepcionalTipo" class="block text-base text-gray-700 mb-1">Se sim, qual tipo?</label>
+                            <input type="text" id="anticoncepcionalTipo" name="anticoncepcionalTipo" placeholder="Oral, Injetável, DIU, Outro"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Menstruação é regular?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="menstSim" name="menstruacaoRegular" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="menstNao" name="menstruacaoRegular" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Intestino preso?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="intestinoSim" name="intestinoPreso" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="intestinoNao" name="intestinoPreso" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="frequenciaEvacuatoriaDiv" class="mt-4" style="display:none;">
+                            <label for="frequenciaEvacuatoria" class="block text-base text-gray-700 mb-1">Frequência evacuatória:</label>
+                            <input type="text" id="frequenciaEvacuatoria" name="frequenciaEvacuatoria"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. SINTOMAS GERAIS -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-head-side-cough mr-3"></i> Sintomas Gerais (Marque o que se aplica)
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaInchaco" name="sintomas" value="Inchaço abdominal" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Inchaço abdominal</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaGases" name="sintomas" value="Gases excessivos" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Gases excessivos</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaRefluxo" name="sintomas" value="Refluxo" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Refluxo</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaConstipacao" name="sintomas" value="Constipação" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Constipação</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaDiarreia" name="sintomas" value="Diarreia" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Diarreia</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaTontura" name="sintomas" value="Tontura ao levantar" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Tontura ao levantar</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaSonolencia" name="sintomas" value="Sonolência após comer" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Sonolência após comer</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaVontadeDoces" name="sintomas" value="Vontade de doces" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Vontade de doces</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaCansaco" name="sintomas" value="Cansaço constante" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Cansaço constante</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaDoresArticulares" name="sintomas" value="Dores articulares" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Dores articulares</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaDificuldadeEmagrecer" name="sintomas" value="Dificuldade para emagrecer" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Dificuldade para emagrecer</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaDificuldadeMassa" name="sintomas" value="Dificuldade para ganhar massa" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Dificuldade para ganhar massa</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaEstagnacao" name="sintomas" value="Estagnação nos resultados" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Estagnação nos resultados</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaBaixaLibido" name="sintomas" value="Baixa libido" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Baixa libido</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaFaltaMotivacao" name="sintomas" value="Falta de motivação" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Falta de motivação</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaIrritabilidade" name="sintomas" value="Irritabilidade" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Irritabilidade</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" id="sintomaAlteracoesHumor" name="sintomas" value="Alterações de humor" class="form-checkbox text-blue-600 rounded">
+                        <span class="ml-2 text-gray-700">Alterações de humor</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- 5. TREINO / ATIVIDADE FÍSICA -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-dumbbell mr-3"></i> Treino / Atividade Física
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Pratica atividade física?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="ativSim" name="praticaAtividade" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="ativNao" name="praticaAtividade" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="detalhesTreinoDiv" class="mt-4" style="display:none;">
+                            <label for="qualAtividade" class="block text-base text-gray-700 mb-1">Qual?</label>
+                            <select id="qualAtividade" name="qualAtividade"
+                                    class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Selecione...</option>
+                                <option value="Musculação">Musculação</option>
+                                <option value="Funcional">Funcional</option>
+                                <option value="Corrida">Corrida</option>
+                                <option value="Luta">Luta</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+
+                            <label for="frequenciaSemanal" class="block text-base text-gray-700 mt-4 mb-1">Frequência semanal:</label>
+                            <input type="text" id="frequenciaSemanal" name="frequenciaSemanal"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                            <label for="tempoTreinoDiario" class="block text-base text-gray-700 mt-4 mb-1">Tempo de treino diário:</label>
+                            <input type="text" id="tempoTreinoDiario" name="tempoTreinoDiario"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+                            <label for="horarioTreino" class="block text-base text-gray-700 mt-4 mb-1">Horário habitual de treino:</label>
+                            <select id="horarioTreino" name="horarioTreino"
+                                    class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Selecione...</option>
+                                <option value="Manhã">Manhã</option>
+                                <option value="Tarde">Tarde</option>
+                                <option value="Noite">Noite</option>
+                            </select>
+
+                            <label for="nivelEsforco" class="block text-base text-gray-700 mt-4 mb-1">Nível de esforço (0 a 10): <span id="esforcoValue">5</span></label>
+                            <input type="range" id="nivelEsforco" name="nivelEsforco" min="0" max="10" value="5"
+                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer range-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. SUPLEMENTOS / HORMÔNIOS / HISTÓRICO -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-pills mr-3"></i> Suplementos / Hormônios / Histórico
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Usa suplementos?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="supSim" name="usaSuplementos" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="supNao" name="usaSuplementos" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="suplementosNomesDiv" class="mt-4" style="display:none;">
+                            <label for="suplementosNomes" class="block text-base text-gray-700 mb-1">Se sim, quais?</label>
+                            <input type="text" id="suplementosNomes" name="suplementosNomes"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Já usou hormônios ou anabolizantes?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="hormSim" name="usouHormonios" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="hormNao" name="usouHormonios" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="hormoniosNomesDiv" class="mt-4" style="display:none;">
+                            <label for="hormoniosNomes" class="block text-base text-gray-700 mb-1">Se sim, quais?</label>
+                            <input type="text" id="hormoniosNomes" name="hormoniosNomes"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label class="block text-base text-gray-700 mt-4 mb-1">Já teve algum efeito colateral?</label>
+                            <div class="flex flex-wrap gap-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="colateralAcne" name="efeitoColateral" value="Acne" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Acne</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="colateralGineco" name="efeitoColateral" value="Ginecomastia" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Ginecomastia</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="colateralQuedaCabelo" name="efeitoColateral" value="Queda de cabelo" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Queda de cabelo</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" id="colateralOutro" name="efeitoColateral" value="Outro" class="form-checkbox text-blue-600 rounded">
+                                    <span class="ml-2 text-gray-700">Outro</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Já fez exames hormonais?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="exameSim" name="fezExames" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="exameNao" name="fezExames" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Já usou termogênicos?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="termoSim" name="usouTermogenicos" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="termoNao" name="usouTermogenicos" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. EMOCIONAL E COMPORTAMENTAL -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-brain mr-3"></i> Emocional e Comportamental
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Dorme bem?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="dormeSim" name="dormeBem" value="Sim" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="dormeNao" name="dormeNao" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="horasSonoDiv" class="mt-4" style="display:none;">
+                            <label for="horasSono" class="block text-base text-gray-700 mb-1">Quantas horas por noite?</label>
+                            <input type="number" id="horasSono" name="horasSono"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Sente estresse com frequência?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="estresseSim" name="senteEstresse" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="estresseNao" name="senteEstresse" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Tem dificuldade de foco e disciplina?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="focoSim" name="temDificuldadeFoco" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="focoNao" name="temDificuldadeFoco" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Acompanhamento psicológico?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="psicoSim" name="acompanhamentoPsicologico" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="psicoNao" name="acompanhamentoPsicologico" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. HÁBITOS ALIMENTARES -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-apple-alt mr-3"></i> Hábitos Alimentares
+                </h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="cafeDaManha" class="block text-base text-gray-700 mb-1">O que costuma comer no café da manhã?</label>
+                        <textarea id="cafeDaManha" name="cafeDaManha" rows="3" required
+                                  class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="almoco" class="block text-base text-gray-700 mb-1">No almoço?</label>
+                        <textarea id="almoco" name="almoco" rows="3" required
+                                  class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="jantar" class="block text-base text-gray-700 mb-1">No jantar?</label>
+                        <textarea id="jantar" name="jantar" rows="3" required
+                                  class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Costuma beliscar entre as refeições?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="beliscarSim" name="costumaBeliscar" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="beliscarNao" name="costumaBeliscar" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Come doces com frequência?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="docesSim" name="comeDoces" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="docesNao" name="comeDoces" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Come à noite antes de dormir?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="comeNoiteSim" name="comeAntesDormir" value="Sim" required class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="comeNoiteNao" name="comeAntesDormir" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Faz jejum?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="jejumSim" name="fazJejum" value="Sim" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Sim</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" id="jejumNao" name="fazJejum" value="Não" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Não</span>
+                            </label>
+                        </div>
+                        <div id="horasJejumDiv" class="mt-4" style="display:none;">
+                            <label for="horasJejum" class="block text-base text-gray-700 mb-1">Quantas horas?</label>
+                            <input type="number" id="horasJejum" name="horasJejum"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Possui alergias ou intolerâncias?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="alergiaGluten" name="alergias" value="Glúten" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Glúten</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="alergiaLactose" name="alergias" value="Lactose" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Lactose</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="alergiaFrutose" name="alergias" value="Frutose" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Frutose</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="alergiaNenhuma" name="alergias" value="Nenhuma" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Nenhuma</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="alergiaOutra" name="alergias" value="Outra" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Outra</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-base text-gray-700 mb-1">Possui preferência alimentar?</label>
+                        <div class="flex flex-wrap gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="prefVegetariano" name="preferenciaAlimentar" value="Vegetariano" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Vegetariano</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="prefVegano" name="preferenciaAlimentar" value="Vegano" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Vegano</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="prefFlexitariano" name="preferenciaAlimentar" value="Flexitariano" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Flexitariano</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="prefCarnivoro" name="preferenciaAlimentar" value="Carnívoro" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Carnívoro</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="checkbox" id="prefOutra" name="preferenciaAlimentar" value="Outra" class="form-checkbox text-blue-600 rounded">
+                                <span class="ml-2 text-gray-700">Outra</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. OBSERVAÇÕES FINAIS -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                    <i class="fas fa-comment-dots mr-3"></i> Observações Finais
+                </h2>
+                <div>
+                    <label for="observacoes" class="block text-base text-gray-700 mb-1">Observações (opcional):</label>
+                    <textarea id="observacoes" name="observacoes" rows="5"
+                              class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" id="gerarJsonBtn"
+                    class="bg-blue-700 text-white rounded-xl px-6 py-3 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full">
+                Enviar Respostas
+            </button>
+        </form>
+
+        <div id="status-message" class="mt-4 text-center text-gray-700"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

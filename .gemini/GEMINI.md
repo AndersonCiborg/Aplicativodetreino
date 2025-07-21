@@ -1,0 +1,6 @@
+## Gemini Added Memories
+- User is on a Samsung S25 Ultra mobile phone.
+- User is a layperson/novice regarding technical concepts.
+- Etapa 1 do desenvolvimento do aplicativo de dieta: Implementado o formulário de acompanhamento quinzenal (acompanhamento.html, acompanhamento.js) com campos para peso, medidas (pescoço, cintura, quadril condicional ao sexo) e upload de 3 fotos (frente, lado, costas). O servidor (server.js) foi atualizado para receber e salvar esses dados, incluindo as fotos em pastas específicas por cliente, e um link personalizado para o formulário de acompanhamento é gerado no dashboard.
+- Etapa 2 do desenvolvimento do aplicativo de dieta: Implementada a lógica de cálculo de composição corporal no server.js. Ao receber um novo acompanhamento, o servidor calcula automaticamente o percentual de gordura, massa gorda e massa magra (usando a fórmula da Marinha dos EUA e dados da anamnese inicial) e salva esses resultados junto com os dados do acompanhamento no anamnese-data.json.
+- Etapa 3 (Parte 1) do desenvolvimento do aplicativo de dieta: O dashboard (dashboard.html, dashboard.js, dashboard.css) foi atualizado para exibir o histórico completo de acompanhamentos de cada cliente. Isso inclui a exibição de peso, medidas, os cálculos de composição corporal (percentual de gordura, massa gorda, massa magra) e miniaturas das fotos de progresso.

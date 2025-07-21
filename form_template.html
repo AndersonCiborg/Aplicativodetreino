@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Formulário Moderno</title>
+    <!-- Tailwind CSS CDN - Para uso em desenvolvimento. Para produção, instale via npm. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8 font-sans text-gray-800">
+    <div class="max-w-3xl mx-auto">
+        <!-- Card/Bloco do Formulário -->
+        <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+            <h2 class="text-2xl font-bold text-blue-900 mb-6">
+                <!-- Ícone opcional aqui -->
+                Informações Pessoais
+            </h2>
+
+            <div class="space-y-6">
+                <!-- Seção 1: Nome e Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="nome" class="block text-sm text-gray-600 mb-2">Nome Completo</label>
+                        <input type="text" id="nome" name="nome"
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               placeholder="Seu nome">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm text-gray-600 mb-2">Email</label>
+                        <input type="email" id="email" name="email"
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                               placeholder="seu.email@exemplo.com">
+                    </div>
+                </div>
+
+                <!-- Seção 2: Endereço -->
+                <div>
+                    <h3 class="text-xl font-bold text-blue-900 mb-4">Endereço</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="rua" class="block text-sm text-gray-600 mb-2">Rua</label>
+                            <input type="text" id="rua" name="rua"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Nome da rua">
+                        </div>
+                        <div>
+                            <label for="cidade" class="block text-sm text-gray-600 mb-2">Cidade</label>
+                            <input type="text" id="cidade" name="cidade"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Sua cidade">
+                        </div>
+                        <div>
+                            <label for="estado" class="block text-sm text-gray-600 mb-2">Estado</label>
+                            <input type="text" id="estado" name="estado"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="Seu estado">
+                        </div>
+                        <div>
+                            <label for="cep" class="block text-sm text-gray-600 mb-2">CEP</label>
+                            <input type="text" id="cep" name="cep"
+                                   class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                   placeholder="00000-000">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botão de Envio -->
+                <div>
+                    <button type="submit"
+                            class="bg-blue-700 text-white rounded-xl px-6 py-3 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Enviar Formulário
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
