@@ -1,0 +1,347 @@
+[
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849477740",
+    "recebidoEm": "2025-07-18T14:37:57.740Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849520847",
+    "recebidoEm": "2025-07-18T14:38:40.847Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849522370",
+    "recebidoEm": "2025-07-18T14:38:42.370Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849536795",
+    "recebidoEm": "2025-07-18T14:38:56.795Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849543632",
+    "recebidoEm": "2025-07-18T14:39:03.632Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849550940",
+    "recebidoEm": "2025-07-18T14:39:10.940Z"
+  },
+  {
+    "dadosGerais": {},
+    "objetivoRotina": {
+      "dietaTentada": []
+    },
+    "habitosConsumos": {
+      "medicacaoTipo": []
+    },
+    "sintomasGerais": {
+      "sintomas": []
+    },
+    "treinoAtividadeFisica": {},
+    "suplementosHormoniosHistorico": {
+      "efeitoColateral": []
+    },
+    "emocionalComportamental": {},
+    "habitosAlimentares": {
+      "alergias": [],
+      "preferenciaAlimentar": []
+    },
+    "observacoesFinais": {},
+    "id": "cliente_1752849884839",
+    "recebidoEm": "2025-07-18T14:44:44.839Z"
+  },
+  {
+    "dadosGerais": {
+      "nomeCompleto": "Anderson Carlos Pereira Soares",
+      "idade": "47",
+      "sexo": "Masculino",
+      "peso": "73",
+      "altura": "1.82",
+      "dataNascimento": "1977-08-30",
+      "email": "anderson_28vp@hotmail.com",
+      "telefone": "21969546978",
+      "horaAcorda": "06:00",
+      "horaDorme": "12:00"
+    },
+    "objetivoRotina": {
+      "objetivo": "Hipertrofia",
+      "dietaTentada": "Tradicional",
+      "resultadoDieta": "Bom",
+      "rotina": "Corrida"
+    },
+    "habitosConsumos": {
+      "aguaPorDia": "1 litro",
+      "usaMedicacao": "Não",
+      "medicacaoDescricao": "",
+      "medicacaoTipo": [],
+      "usaAnticoncepcional": "Não",
+      "anticoncepcionalTipo": "",
+      "menstruacaoRegular": "Não",
+      "intestinoPreso": "Sim",
+      "frequenciaEvacuatoria": "A cada 3 dias "
+    },
+    "sintomasGerais": {
+      "sintomas": [
+        "Inchaço abdominal",
+        "Gases excessivos",
+        "Constipação",
+        "Sonolência após comer",
+        "Vontade de doces",
+        "Cansaço constante",
+        "Dores articulares",
+        "Baixa libido",
+        "Falta de motivação"
+      ]
+    },
+    "treinoAtividadeFisica": {
+      "praticaAtividade": "Sim",
+      "qualAtividade": "Luta",
+      "frequenciaSemanal": "3x",
+      "tempoTreinoDiario": "30 min",
+      "horarioTreino": "Noite",
+      "nivelEsforco": "5"
+    },
+    "suplementosHormoniosHistorico": {
+      "usaSuplementos": "Não",
+      "suplementosNomes": "",
+      "usouHormonios": "Sim",
+      "hormoniosNomes": "Quase Todos ",
+      "efeitoColateral": [
+        "Acne",
+        "Ginecomastia",
+        "Queda de cabelo"
+      ],
+      "fezExames": "Sim",
+      "usouTermogenicos": "Sim"
+    },
+    "emocionalComportamental": {
+      "dormeBem": "Sim",
+      "horasSono": "",
+      "senteEstresse": "Não",
+      "temDificuldadeFoco": "Sim",
+      "acompanhamentoPsicologico": "Não"
+    },
+    "habitosAlimentares": {
+      "cafeDaManha": "Aveia  iogurte amendoim moído ",
+      "almoco": "Macarrão carne moída ",
+      "jantar": "Arroz feijao carne",
+      "costumaBeliscar": "Não",
+      "comeDoces": "Sim",
+      "comeAntesDormir": "Sim",
+      "fazJejum": "Não",
+      "horasJejum": "",
+      "alergias": "Lactose",
+      "preferenciaAlimentar": "Carnívoro"
+    },
+    "observacoesFinais": {
+      "observacoes": ""
+    },
+    "id": "cliente_1752940408185",
+    "recebidoEm": "2025-07-19T15:53:28.185Z"
+  },
+  {
+    "dadosGerais": {
+      "nomeCompleto": "Anderson Teste ",
+      "idade": "47",
+      "sexo": "Masculino",
+      "peso": "73",
+      "altura": "1.82",
+      "dataNascimento": "1977-08-30",
+      "email": "anderson_28vp@hotmail.com",
+      "telefone": "21969546978",
+      "horaAcorda": "06:31",
+      "horaDorme": "12:31"
+    },
+    "objetivoRotina": {
+      "objetivo": "Hipertrofia",
+      "dietaTentada": "Tradicional",
+      "resultadoDieta": "Ótimo ",
+      "rotina": "Corrida"
+    },
+    "habitosConsumos": {
+      "aguaPorDia": "1 litro",
+      "usaMedicacao": "Não",
+      "medicacaoDescricao": "",
+      "medicacaoTipo": [],
+      "usaAnticoncepcional": "Não",
+      "anticoncepcionalTipo": "",
+      "menstruacaoRegular": "Sim",
+      "intestinoPreso": "Sim",
+      "frequenciaEvacuatoria": "A cada 3 dias "
+    },
+    "sintomasGerais": {
+      "sintomas": [
+        "Gases excessivos",
+        "Constipação",
+        "Sonolência após comer",
+        "Vontade de doces",
+        "Dores articulares",
+        "Estagnação nos resultados",
+        "Baixa libido",
+        "Falta de motivação"
+      ]
+    },
+    "treinoAtividadeFisica": {
+      "praticaAtividade": "Não",
+      "qualAtividade": "",
+      "frequenciaSemanal": "",
+      "tempoTreinoDiario": "",
+      "horarioTreino": "",
+      "nivelEsforco": "5"
+    },
+    "suplementosHormoniosHistorico": {
+      "usaSuplementos": "Não",
+      "suplementosNomes": "",
+      "usouHormonios": "Sim",
+      "hormoniosNomes": "Todos ",
+      "efeitoColateral": [
+        "Acne",
+        "Ginecomastia",
+        "Queda de cabelo"
+      ],
+      "fezExames": "Sim",
+      "usouTermogenicos": "Sim"
+    },
+    "emocionalComportamental": {
+      "dormeBem": "Sim",
+      "horasSono": "",
+      "senteEstresse": "Sim",
+      "temDificuldadeFoco": "Sim",
+      "acompanhamentoPsicologico": "Não"
+    },
+    "habitosAlimentares": {
+      "cafeDaManha": "Tudo",
+      "almoco": "Tudo",
+      "jantar": "Tudo",
+      "costumaBeliscar": "Sim",
+      "comeDoces": "Sim",
+      "comeAntesDormir": "Não",
+      "fazJejum": "Não",
+      "horasJejum": "",
+      "alergias": "Lactose",
+      "preferenciaAlimentar": "Carnívoro"
+    },
+    "observacoesFinais": {
+      "observacoes": "Nenhuma "
+    },
+    "id": "cliente_1753036562072",
+    "recebidoEm": "2025-07-20T18:36:02.072Z"
+  }
+]

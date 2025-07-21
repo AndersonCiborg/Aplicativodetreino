@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Acompanhamento</title>
+    <!-- Tailwind CSS CDN - Para uso em desenvolvimento. Para produção, instale via npm. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8 font-sans text-gray-800">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-blue-900 mb-4 text-center">Acompanhamento Quinzenal</h1>
+        <p id="form-intro" class="text-center text-gray-600 mb-8">Preencha suas novas métricas para acompanharmos sua evolução.</p>
+        
+        <form id="acompanhamentoForm" novalidate class="space-y-6">
+            <!-- O ID do cliente será inserido aqui pelo script -->
+            <input type="hidden" id="clientId" name="clientId">
+
+            <!-- Métricas Atuais -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:p-8">
+                <h2 class="text-2xl font-bold text-blue-900 mb-6">Métricas Atuais</h2>
+                <div>
+                    <label for="peso" class="block text-sm text-gray-600 mb-2">Peso Atual (kg):</label>
+                    <input type="number" id="peso" name="peso" step="0.1" required
+                           class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <!-- Medidas Corporais -->
+            <div id="medidas-section" class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8" style="display: none;"> <!-- Começa escondido -->
+                <h2 class="text-2xl font-bold text-blue-900 mb-6">Medidas Corporais</h2>
+                <p class="text-gray-600 mb-4">Siga as instruções para tirar as medidas corretamente.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div id="pescoco-div">
+                        <label for="pescoco" class="block text-sm text-gray-600 mb-2">Pescoço (cm):</label>
+                        <input type="number" id="pescoco" name="pescoco" step="0.1" placeholder="Medir na altura do gogó" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div id="cintura-div">
+                        <label for="cintura" class="block text-sm text-gray-600 mb-2">Cintura (cm):</label>
+                        <input type="number" id="cintura" name="cintura" step="0.1" placeholder="Medir na linha do umbigo" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <div id="quadril-div" class="md:col-span-2" style="display: none;"> <!-- Apenas para mulheres -->
+                        <label for="quadril" class="block text-sm text-gray-600 mb-2">Quadril (cm):</label>
+                        <input type="number" id="quadril" name="quadril" step="0.1" placeholder="Medir na parte mais larga dos glúteos" required
+                               class="w-full bg-white border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fotos Atuais -->
+            <div class="bg-white rounded-xl shadow-md p-6 mb-6 md:p-8">
+                <h2 class="text-2xl font-bold text-blue-900 mb-6">Fotos Atuais</h2>
+                <p class="text-gray-600 mb-4">As fotos são importantes para a avaliação visual do progresso.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="fotoFrente" class="block text-sm text-gray-600 mb-2">Foto de Frente:</label>
+                        <input type="file" id="fotoFrente" name="fotoFrente" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+
+                    <div>
+                        <label for="fotoLado" class="block text-sm text-gray-600 mb-2">Foto de Lado:</label>
+                        <input type="file" id="fotoLado" name="fotoLado" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="fotoCostas" class="block text-sm text-gray-600 mb-2">Foto de Costas:</label>
+                        <input type="file" id="fotoCostas" name="fotoCostas" accept="image/*" required
+                               class="w-full text-gray-700 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="bg-blue-700 text-white rounded-xl px-6 py-3 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full">
+                Enviar Acompanhamento
+            </button>
+        </form>
+
+        <div id="status-message" class="mt-4 text-center text-gray-700"></div>
+    </div>
+
+    <script src="acompanhamento.js"></script>
+</body>
+</html>
