@@ -1,0 +1,218 @@
+[
+  {
+    "nome": "Abacate",
+    "medida": "g",
+    "ptn_animal": 0.012,
+    "ptn_vegetal": 0,
+    "cho": 0.06,
+    "fat": 0.084,
+    "categoria": "FAT"
+  },
+  {
+    "nome": "Abacaxi",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.12,
+    "fat": 0.01,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Abóbora moranga refogada",
+    "medida": "g",
+    "ptn_animal": 0.06,
+    "ptn_vegetal": 0,
+    "cho": 0.06,
+    "fat": 0.006,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Abobrinha",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.01,
+    "fat": 0,
+    "categoria": "VEGETAL"
+  },
+  {
+    "nome": "Açaí polpa congelada",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.06,
+    "fat": 0.04,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Acelga",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.01,
+    "fat": 0,
+    "categoria": "FOLHA"
+  },
+  {
+    "nome": "Acerola polpa congelada",
+    "medida": "g",
+    "ptn_animal": 0.06,
+    "ptn_vegetal": 0,
+    "cho": 0.05,
+    "fat": 0.02,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Adipoxin",
+    "medida": "comprimido",
+    "ptn_animal": 0,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Agrião",
+    "medida": "g",
+    "ptn_animal": 0.03,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Água com gás",
+    "medida": "ml",
+    "ptn_animal": 0,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Água",
+    "medida": "ml",
+    "ptn_animal": 0,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Água 1h após a refeição",
+    "medida": "ml",
+    "ptn_animal": 0,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Água de coco",
+    "medida": "g",
+    "ptn_animal": 0.0072,
+    "ptn_vegetal": 0,
+    "cho": 0.07,
+    "fat": 0.02,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Aipim cozido",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.04,
+    "fat": 0.04,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Aipim frito",
+    "medida": "g",
+    "ptn_animal": 0.319,
+    "ptn_vegetal": 0,
+    "cho": 0.7,
+    "fat": 0.08,
+    "categoria": "FAT"
+  },
+  {
+    "nome": "Alcatra",
+    "medida": "g",
+    "ptn_animal": 0.479,
+    "ptn_vegetal": 0,
+    "cho": 0.1,
+    "fat": 0.05,
+    "categoria": "PTN"
+  },
+  {
+    "nome": "Folhas verdes (variar entre elas)",
+    "medida": "à vontade",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.01,
+    "fat": 0,
+    "categoria": "FOLHAS"
+  },
+  {
+    "nome": "Alho-poró",
+    "medida": "g",
+    "ptn_animal": 0.01,
+    "ptn_vegetal": 0,
+    "cho": 0.07,
+    "fat": 0.07,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Ameixa seca",
+    "medida": "g",
+    "ptn_animal": 0.22,
+    "ptn_vegetal": 0,
+    "cho": 0.54,
+    "fat": 0.47,
+    "categoria": "CHO"
+  },
+  {
+    "nome": "Amêndoa torrada salgada",
+    "medida": "g",
+    "ptn_animal": 0.19,
+    "ptn_vegetal": 0,
+    "cho": 0.12,
+    "fat": 0.49,
+    "categoria": "FAT"
+  },
+  {
+    "nome": "Amendoim moído",
+    "medida": "g",
+    "ptn_animal": 0.32,
+    "ptn_vegetal": 0,
+    "cho": 0.11,
+    "fat": 0.49,
+    "categoria": "FAT"
+  },
+  {
+    "nome": "Amendoim torrado salgado",
+    "medida": "g",
+    "ptn_animal": 0.22,
+    "ptn_vegetal": 0,
+    "cho": 0.19,
+    "fat": 0.54,
+    "categoria": "FAT"
+  },
+  {
+    "nome": "Amino Hard da Integral Médica",
+    "medida": "g",
+    "ptn_animal": 0,
+    "ptn_vegetal": 0,
+    "cho": 0,
+    "fat": 0,
+    "categoria": "NEUTRO"
+  },
+  {
+    "nome": "Arroz branco",
+    "medida": "g",
+    "ptn_animal": 0.03,
+    "ptn_vegetal": 0,
+    "cho": 0.28,
+    "fat": 0.01,
+    "categoria": "CHO"
+  }
+]
