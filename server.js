@@ -53,54 +53,119 @@ function calculateHarrisBenedictGET(sexo, pesoKg, alturaCm, idadeAnos, fatorAtiv
     return parseFloat(get.toFixed(2));
 }
 
-// Função placeholder para gerar um plano alimentar
+// Função auxiliar para pegar um item aleatório de um array
+function getRandomItem(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Função para gerar um plano alimentar
 function generateMealPlan(clientData, tabelaNutricional) {
-    // Por enquanto, retorna um plano de exemplo. A lógica real virá depois.
-    return {
-        planoAlimentar: [
-            {
-                refeicao: "Desjejum",
-                horario: "07:00",
-                itens: [
-                    {
-                        alimento: "Ovo",
-                        quantidade: "2 unidades",
-                        medida: "unidades",
-                        macros: { ptn_animal: 12, ptn_vegetal: 0, cho: 1, fat: 10, kcal: 150 }
-                    },
-                    {
-                        alimento: "Pão Integral",
-                        quantidade: "2 fatias",
-                        medida: "fatias",
-                        macros: { ptn_animal: 0, ptn_vegetal: 6, cho: 30, fat: 2, kcal: 180 }
-                    }
-                ]
-            },
-            {
-                refeicao: "Almoço",
-                horario: "12:30",
-                itens: [
-                    {
-                        alimento: "Frango Grelhado",
-                        quantidade: "150g",
-                        medida: "g",
-                        macros: { ptn_animal: 45, ptn_vegetal: 0, cho: 0, fat: 5, kcal: 250 }
-                    },
-                    {
-                        alimento: "Arroz Branco",
-                        quantidade: "100g",
-                        medida: "g",
-                        macros: { ptn_animal: 0, ptn_vegetal: 3, cho: 28, fat: 1, kcal: 130 }
-                    }
-                ]
+    const planoAlimentar = [];
+    let totalPtnAnimal = 0;
+    let totalPtnVegetal = 0;
+    let totalCho = 0;
+    let totalFat = 0;
+    let totalKcal = 0;
+
+    // Refeições fixas para o plano
+    const refeicoes = [
+        { nome: "Desjejum", horario: "07:00" },
+        { nome: "Lanche da Manhã", horario: "10:00" },
+        { nome: "Almoço", horario: "13:00" },
+        { nome: "Lanche da Tarde", horario: "16:00" },
+        { nome: "Jantar", horario: "20:00" }
+    ];
+
+    refeicoes.forEach(refeicaoInfo => {
+        const itensRefeicao = [];
+        let alimentosParaRefeicao = [];
+
+        // Lógica de seleção de alimentos por refeição (exemplo básico)
+        if (refeicaoInfo.nome === "Desjejum") {
+            // Exemplo: 1 proteína (PTN) e 1 carboidrato (CHO)
+            const proteinas = tabelaNutricional.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
+
+            if (proteinas.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(proteinas));
             }
-        ],
+            if (carboidratos.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(carboidratos));
+            }
+        } else if (refeicaoInfo.nome === "Almoço" || refeicaoInfo.nome === "Jantar") {
+            // Exemplo: 1 proteína (PTN), 1 carboidrato (CHO), 1 vegetal (VEGETAL/FOLHA)
+            const proteinas = tabelaNutricional.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
+            const vegetais = tabelaNutricional.filter(item => item.categoria === 'VEGETAL' || item.categoria === 'FOLHA');
+
+            if (proteinas.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(proteinas));
+            }
+            if (carboidratos.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(carboidratos));
+            }
+            if (vegetais.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(vegetais));
+            }
+        } else { // Lanches
+            // Exemplo: 1 carboidrato (CHO) ou 1 gordura (FAT)
+            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
+            const gorduras = tabelaNutricional.filter(item => item.categoria === 'FAT');
+
+            if (carboidratos.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(carboidratos));
+            } else if (gorduras.length > 0) {
+                alimentosParaRefeicao.push(getRandomItem(gorduras));
+            }
+        }
+
+        alimentosParaRefeicao.forEach(alimentoData => {
+            // Para simplificar, vamos assumir uma porção padrão ou a medida da tabela
+            // Em um cenário real, a quantidade seria calculada com base nas necessidades do cliente
+            const quantidade = alimentoData.medida === 'g' ? '100g' : '1 unidade'; // Exemplo de quantidade
+            const ptn_animal = alimentoData.ptn_animal || 0;
+            const ptn_vegetal = alimentoData.ptn_vegetal || 0;
+            const cho = alimentoData.cho || 0;
+            const fat = alimentoData.fat || 0;
+            // Para kcal, você precisaria de um cálculo mais preciso (ex: 4kcal/g CHO, 4kcal/g PTN, 9kcal/g FAT)
+            // Por enquanto, vamos usar um valor placeholder ou calcular com base nos macros se tivermos os valores por grama
+            const kcal = (ptn_animal + ptn_vegetal) * 4 + cho * 4 + fat * 9; // Exemplo de cálculo de kcal
+
+            itensRefeicao.push({
+                alimento: alimentoData.nome,
+                quantidade: quantidade,
+                medida: alimentoData.medida,
+                macros: {
+                    ptn_animal: parseFloat(ptn_animal.toFixed(2)),
+                    ptn_vegetal: parseFloat(ptn_vegetal.toFixed(2)),
+                    cho: parseFloat(cho.toFixed(2)),
+                    fat: parseFloat(fat.toFixed(2)),
+                    kcal: parseFloat(kcal.toFixed(2))
+                }
+            });
+
+            totalPtnAnimal += ptn_animal;
+            totalPtnVegetal += ptn_vegetal;
+            totalCho += cho;
+            totalFat += fat;
+            totalKcal += kcal;
+        });
+
+        planoAlimentar.push({
+            refeicao: refeicaoInfo.nome,
+            horario: refeicaoInfo.horario,
+            itens: itensRefeicao
+        });
+    });
+
+    return {
+        planoAlimentar: planoAlimentar,
         macrosTotais: {
-            ptn_animal: 57,
-            ptn_vegetal: 9,
-            cho: 59,
-            fat: 18,
-            calorias: 710
+            ptn_animal: parseFloat(totalPtnAnimal.toFixed(2)),
+            ptn_vegetal: parseFloat(totalPtnVegetal.toFixed(2)),
+            cho: parseFloat(totalCho.toFixed(2)),
+            fat: parseFloat(totalFat.toFixed(2)),
+            calorias: parseFloat(totalKcal.toFixed(2))
         }
     };
 }
