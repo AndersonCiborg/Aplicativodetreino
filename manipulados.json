@@ -1,0 +1,68 @@
+[
+  {
+    "nome_do_manipulado": "Rhodiola Rosea",
+    "ingredientes_composicao": "Extrato seco padronizado em rosavina e salidrosídeo",
+    "objetivo": "Antiestresse, cognição, melhora do sono",
+    "posologia": "100 a 300mg/dia"
+  },
+  {
+    "nome_do_manipulado": "Ashwagandha",
+    "ingredientes_composicao": "KSM-66 padronizado em withanólidos",
+    "objetivo": "Aumenta resistência ao estresse, reduz cortisol, melhora performance",
+    "posologia": "3 a 5g/dia"
+  },
+  {
+    "nome_do_manipulado": "Citicolina",
+    "ingredientes_composicao": "Forma ativa da colina (precursora de acetilcolina)",
+    "objetivo": "Foco, atenção, cognição, TDAH, Alzheimer leve",
+    "posologia": "500mg 2x ao dia"
+  },
+  {
+    "nome_do_manipulado": "Cafeína + L-teanina",
+    "ingredientes_composicao": "100mg cafeína + 200mg L-teanina",
+    "objetivo": "Controle do apetite, energia e foco",
+    "posologia": "100mg/dia"
+  },
+  {
+    "nome_do_manipulado": "Saw Palmetto",
+    "ingredientes_composicao": "Extrato seco padronizado",
+    "objetivo": "Redução de gordura causada por DHT",
+    "posologia": "0,5mg/dia"
+  },
+  {
+    "nome_do_manipulado": "Mucuna pruriens",
+    "ingredientes_composicao": "Extrato padronizado em L-Dopa",
+    "objetivo": "Melhora do humor, produção hormonal, libido",
+    "posologia": "10mg/dia"
+  },
+  {
+    "nome_do_manipulado": "Dente de leão",
+    "ingredientes_composicao": "Rico em potássio, diurético natural leve",
+    "objetivo": "Retenção hídrica, intestino, queda de cabelo",
+    "posologia": "100mg 2x/dia"
+  },
+  {
+    "nome_do_manipulado": "Fadogia agrestis",
+    "ingredientes_composicao": "Extrato seco",
+    "objetivo": "Estimula testosterona, ativa eixo HPT",
+    "posologia": "500mg/dia"
+  },
+  {
+    "nome_do_manipulado": "5-HTP",
+    "ingredientes_composicao": "Derivado do triptofano",
+    "objetivo": "Bloqueia ansiedade, reduz dopamina, compulsão",
+    "posologia": "500mg 2x/dia"
+  },
+  {
+    "nome_do_manipulado": "Panax Ginseng",
+    "ingredientes_composicao": "Extrato seco padronizado",
+    "objetivo": "Aumenta foco, energia, melhora ansiedade",
+    "posologia": "500mg/dia"
+  },
+  {
+    "nome_do_manipulado": "Mucuna pruriens + Ginkgo Biloba",
+    "ingredientes_composicao": "L-Dopa + flavonoides",
+    "objetivo": "Ativador mental, dopamina, foco",
+    "posologia": "500mg 2x/dia"
+  }
+]
