@@ -67,6 +67,24 @@ function generateMealPlan(clientData, tabelaNutricional) {
     let totalFat = 0;
     let totalKcal = 0;
 
+    // Obter o GET do cliente (calculado anteriormente na rota /salvar-dados)
+    const getCliente = clientData.calculos && clientData.calculos.getHarrisBenedict ? clientData.calculos.getHarrisBenedict : 2000; // Valor padrão se não encontrado
+
+    // Definir a distribuição de macronutrientes (exemplo: 40% CHO, 30% PTN, 30% FAT)
+    const percentCho = 0.40;
+    const percentPtn = 0.30;
+    const percentFat = 0.30;
+
+    // Calcular as metas em calorias para cada macronutriente
+    const metaKcalCho = getCliente * percentCho;
+    const metaKcalPtn = getCliente * percentPtn;
+    const metaKcalFat = getCliente * percentFat;
+
+    // Converter metas de calorias para gramas (4 kcal/g para CHO e PTN, 9 kcal/g para FAT)
+    const metaGramasCho = metaKcalCho / 4;
+    const metaGramasPtn = metaKcalPtn / 4;
+    const metaGramasFat = metaKcalFat / 9;
+
     // Refeições fixas para o plano
     const refeicoes = [
         { nome: "Desjejum", horario: "07:00" },
@@ -76,15 +94,47 @@ function generateMealPlan(clientData, tabelaNutricional) {
         { nome: "Jantar", horario: "20:00" }
     ];
 
+    // Obter alergias do cliente
+    const alergiasCliente = clientData.habitosAlimentares && clientData.habitosAlimentares.alergias ? clientData.habitosAlimentares.alergias : [];
+    const temAlergiaGluten = alergiasCliente.includes('Glúten');
+    const temAlergiaLactose = alergiasCliente.includes('Lactose');
+
+    // Filtrar a tabela nutricional com base nas alergias
+    const tabelaNutricionalFiltrada = tabelaNutricional.filter(item => {
+        const nomeAlimento = item.nome.toLowerCase();
+        if (temAlergiaGluten && nomeAlimento.includes('glúten')) { // Simplificação: se o nome contém 'glúten'
+            return false;
+        }
+        if (temAlergiaLactose && nomeAlimento.includes('lactose')) { // Simplificação: se o nome contém 'lactose'
+            return false;
+        }
+        // Adicionar mais regras de filtragem para outras alergias se necessário
+        return true;
+    });
+
+    // Lógica de distribuição de macros por refeição (simplificada)
+    // Por exemplo, distribuir igualmente entre as refeições principais
+    const macrosPorRefeicaoPrincipal = {
+        cho: metaGramasCho / 3, // Desjejum, Almoço, Jantar
+        ptn: metaGramasPtn / 3,
+        fat: metaGramasFat / 3
+    };
+    const macrosPorLanche = {
+        cho: metaGramasCho / 6, // Lanche da Manhã, Lanche da Tarde
+        ptn: metaGramasPtn / 6,
+        fat: metaGramasFat / 6
+    };
+
+
     refeicoes.forEach(refeicaoInfo => {
         const itensRefeicao = [];
-        let alimentosParaRefeicao = [];
+        let macrosAtuaisRefeicao = { ptn_animal: 0, ptn_vegetal: 0, cho: 0, fat: 0, kcal: 0 };
 
         // Lógica de seleção de alimentos por refeição (exemplo básico)
         if (refeicaoInfo.nome === "Desjejum") {
             // Exemplo: 1 proteína (PTN) e 1 carboidrato (CHO)
-            const proteinas = tabelaNutricional.filter(item => item.categoria === 'PTN');
-            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
+            const proteinas = tabelaNutricionalFiltrada.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
 
             if (proteinas.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(proteinas));
@@ -94,9 +144,9 @@ function generateMealPlan(clientData, tabelaNutricional) {
             }
         } else if (refeicaoInfo.nome === "Almoço" || refeicaoInfo.nome === "Jantar") {
             // Exemplo: 1 proteína (PTN), 1 carboidrato (CHO), 1 vegetal (VEGETAL/FOLHA)
-            const proteinas = tabelaNutricional.filter(item => item.categoria === 'PTN');
-            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
-            const vegetais = tabelaNutricional.filter(item => item.categoria === 'VEGETAL' || item.categoria === 'FOLHA');
+            const proteinas = tabelaNutricionalFiltrada.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
+            const vegetais = tabelaNutricionalFiltrada.filter(item => item.categoria === 'VEGETAL' || item.categoria === 'FOLHA');
 
             if (proteinas.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(proteinas));
@@ -109,8 +159,8 @@ function generateMealPlan(clientData, tabelaNutricional) {
             }
         } else { // Lanches
             // Exemplo: 1 carboidrato (CHO) ou 1 gordura (FAT)
-            const carboidratos = tabelaNutricional.filter(item => item.categoria === 'CHO');
-            const gorduras = tabelaNutricional.filter(item => item.categoria === 'FAT');
+            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
+            const gorduras = tabelaNutricionalFiltrada.filter(item => item.categoria === 'FAT');
 
             if (carboidratos.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(carboidratos));
@@ -154,13 +204,33 @@ function generateMealPlan(clientData, tabelaNutricional) {
         planoAlimentar.push({
             refeicao: refeicaoInfo.nome,
             horario: refeicaoInfo.horario,
-            itens: itensRefeicao
+            itens: itensRefeicao,
+            macrosRefeicao: { // Adiciona os macros calculados para a refeição
+                ptn_animal: parseFloat(macrosAtuaisRefeicao.ptn_animal.toFixed(2)),
+                ptn_vegetal: parseFloat(macrosAtuaisRefeicao.ptn_vegetal.toFixed(2)),
+                cho: parseFloat(macrosAtuaisRefeicao.cho.toFixed(2)),
+                fat: parseFloat(macrosAtuaisRefeicao.fat.toFixed(2)),
+                kcal: parseFloat(macrosAtuaisRefeicao.kcal.toFixed(2))
+            }
         });
+
+        // Acumula os totais gerais do plano
+        totalPtnAnimal += macrosAtuaisRefeicao.ptn_animal;
+        totalPtnVegetal += macrosAtuaisRefeicao.ptn_vegetal;
+        totalCho += macrosAtuaisRefeicao.cho;
+        totalFat += macrosAtuaisRefeicao.fat;
+        totalKcal += macrosAtuaisRefeicao.kcal;
     });
 
     return {
         planoAlimentar: planoAlimentar,
-        macrosTotais: {
+        metasDiarias: {
+            get: parseFloat(getCliente.toFixed(2)),
+            cho: parseFloat(metaGramasCho.toFixed(2)),
+            ptn: parseFloat(metaGramasPtn.toFixed(2)),
+            fat: parseFloat(metaGramasFat.toFixed(2))
+        },
+        macrosTotaisGerados: { // Renomeado para evitar confusão com metas
             ptn_animal: parseFloat(totalPtnAnimal.toFixed(2)),
             ptn_vegetal: parseFloat(totalPtnVegetal.toFixed(2)),
             cho: parseFloat(totalCho.toFixed(2)),
