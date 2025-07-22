@@ -5,6 +5,16 @@ const multer = require('multer');
 const app = express();
 const PORT = 3000;
 
+// Carregar a tabela nutricional
+let tabelaNutricional = [];
+try {
+    const data = fs.readFileSync(path.join(__dirname, 'tabela-nutricional.json'), 'utf8');
+    tabelaNutricional = JSON.parse(data);
+    console.log('Tabela Nutricional carregada com sucesso.');
+} catch (err) {
+    console.error('Erro ao carregar a Tabela Nutricional:', err);
+}
+
 // Função para calcular o Gasto Energético Total (GET) usando a fórmula de Harris-Benedict
 function calculateHarrisBenedictGET(sexo, pesoKg, alturaCm, idadeAnos, fatorAtividade) {
     let tmb;
