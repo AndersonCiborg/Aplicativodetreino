@@ -256,7 +256,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 hormoniosNomes: jsonData.hormoniosNomes,
                 efeitoColateral: jsonData.efeitoColateral || [],
                 fezExames: jsonData.fezExames,
-                usouTermogenicos: jsonData.usouTermogenicos
+                usouTermogenicos: jsonData.usouTermogenicos,
+                doencasPreexistentes: jsonData.doencasPreexistentes,
+                historicoFamiliarDoencas: jsonData.historicoFamiliarDoencas
             },
             emocionalComportamental: {
                 dormeBem: jsonData.dormeBem,
