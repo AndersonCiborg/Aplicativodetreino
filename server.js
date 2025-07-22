@@ -5,6 +5,44 @@ const multer = require('multer');
 const app = express();
 const PORT = 3000;
 
+// Função para calcular o Gasto Energético Total (GET) usando a fórmula de Harris-Benedict
+function calculateHarrisBenedictGET(sexo, pesoKg, alturaCm, idadeAnos, fatorAtividade) {
+    let tmb;
+
+    if (sexo === 'Masculino') {
+        tmb = 66 + (13.7 * pesoKg) + (5 * alturaCm) - (6.8 * idadeAnos);
+    } else if (sexo === 'Feminino') {
+        tmb = 655 + (9.6 * pesoKg) + (1.8 * alturaCm) - (4.7 * idadeAnos);
+    } else {
+        // Caso o sexo não seja Masculino ou Feminino, ou dados inválidos
+        return null;
+    }
+
+    // Fatores de atividade física (exemplo, podem ser ajustados)
+    let get;
+    switch (fatorAtividade) {
+        case 'sedentario':
+            get = tmb * 1.2;
+            break;
+        case 'levemente_ativo':
+            get = tmb * 1.375;
+            break;
+        case 'moderadamente_ativo':
+            get = tmb * 1.55;
+            break;
+        case 'muito_ativo':
+            get = tmb * 1.725;
+            break;
+        case 'extremamente_ativo':
+            get = tmb * 1.9;
+            break;
+        default:
+            get = tmb; // Se nenhum fator for especificado, retorna apenas a TMB
+    }
+
+    return parseFloat(get.toFixed(2));
+}
+
 // --- Configuração do Multer para Upload de Arquivos ---
 // Configuração de armazenamento para anamnese inicial (temporário, pois clientId ainda não existe)
 const initialAnamneseStorage = multer.diskStorage({
@@ -65,6 +103,23 @@ app.post('/salvar-dados', uploadInitialAnamnese.fields([
     const clientId = `cliente_${Date.now()}`;
     novosDados.id = clientId;
     novosDados.recebidoEm = new Date().toISOString();
+
+    // Calcula o GET usando Harris-Benedict
+    const pesoKg = parseFloat(novosDados.dadosGerais.peso);
+    const alturaCm = parseFloat(novosDados.dadosGerais.altura);
+    const idadeAnos = parseInt(novosDados.dadosGerais.idade);
+    const sexo = novosDados.dadosGerais.sexo;
+    const fatorAtividade = novosDados.treinoAtividadeFisica.fatorAtividade;
+
+    if (!isNaN(pesoKg) && !isNaN(alturaCm) && !isNaN(idadeAnos) && sexo && fatorAtividade) {
+        const getHarrisBenedict = calculateHarrisBenedictGET(sexo, pesoKg, alturaCm, idadeAnos, fatorAtividade);
+        if (getHarrisBenedict !== null) {
+            if (!novosDados.calculos) {
+                novosDados.calculos = {};
+            }
+            novosDados.calculos.getHarrisBenedict = getHarrisBenedict;
+        }
+    }
 
     // Processa as fotos iniciais
     if (files) {

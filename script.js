@@ -247,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 frequenciaSemanal: jsonData.frequenciaSemanal,
                 tempoTreinoDiario: jsonData.tempoTreinoDiario,
                 horarioTreino: jsonData.horarioTreino,
+                fatorAtividade: jsonData.fatorAtividade,
                 nivelEsforco: jsonData.nivelEsforco
             },
             suplementosHormoniosHistorico: {
