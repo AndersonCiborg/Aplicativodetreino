@@ -53,6 +53,58 @@ function calculateHarrisBenedictGET(sexo, pesoKg, alturaCm, idadeAnos, fatorAtiv
     return parseFloat(get.toFixed(2));
 }
 
+// Função placeholder para gerar um plano alimentar
+function generateMealPlan(clientData, tabelaNutricional) {
+    // Por enquanto, retorna um plano de exemplo. A lógica real virá depois.
+    return {
+        planoAlimentar: [
+            {
+                refeicao: "Desjejum",
+                horario: "07:00",
+                itens: [
+                    {
+                        alimento: "Ovo",
+                        quantidade: "2 unidades",
+                        medida: "unidades",
+                        macros: { ptn_animal: 12, ptn_vegetal: 0, cho: 1, fat: 10, kcal: 150 }
+                    },
+                    {
+                        alimento: "Pão Integral",
+                        quantidade: "2 fatias",
+                        medida: "fatias",
+                        macros: { ptn_animal: 0, ptn_vegetal: 6, cho: 30, fat: 2, kcal: 180 }
+                    }
+                ]
+            },
+            {
+                refeicao: "Almoço",
+                horario: "12:30",
+                itens: [
+                    {
+                        alimento: "Frango Grelhado",
+                        quantidade: "150g",
+                        medida: "g",
+                        macros: { ptn_animal: 45, ptn_vegetal: 0, cho: 0, fat: 5, kcal: 250 }
+                    },
+                    {
+                        alimento: "Arroz Branco",
+                        quantidade: "100g",
+                        medida: "g",
+                        macros: { ptn_animal: 0, ptn_vegetal: 3, cho: 28, fat: 1, kcal: 130 }
+                    }
+                ]
+            }
+        ],
+        macrosTotais: {
+            ptn_animal: 57,
+            ptn_vegetal: 9,
+            cho: 59,
+            fat: 18,
+            calorias: 710
+        }
+    };
+}
+
 // --- Configuração do Multer para Upload de Arquivos ---
 // Configuração de armazenamento para anamnese inicial (temporário, pois clientId ainda não existe)
 const initialAnamneseStorage = multer.diskStorage({
@@ -145,6 +197,9 @@ app.post('/salvar-dados', uploadInitialAnamnese.fields([
             novosDados.fotosIniciais[fieldName] = `/uploads/${clientId}/${file.filename}`;
         }
     }
+
+    // Gera o plano alimentar (usando a função placeholder por enquanto)
+    novosDados.planoAlimentarGerado = generateMealPlan(novosDados, tabelaNutricional);
 
     fs.readFile(filePath, 'utf8', (err, data) => {
         let todosOsDados = [];
