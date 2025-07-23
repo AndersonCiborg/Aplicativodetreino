@@ -127,6 +127,23 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSection(detailContent, 'Hábitos Alimentares', clientData.habitosAlimentares, 'fas fa-apple-alt');
             renderSection(detailContent, 'Observações Finais', clientData.observacoesFinais, 'fas fa-comment-dots');
 
+            // **NOVO: Renderiza a Análise da IA**
+            if (clientData.analiseIA) {
+                const iaSection = document.createElement('div');
+                iaSection.className = 'bg-purple-50 border-l-4 border-purple-500 rounded-r-xl shadow-md p-6 mb-6 md:p-8';
+                const sectionTitle = document.createElement('h2');
+                sectionTitle.className = 'text-2xl font-bold text-purple-900 mb-4 flex items-center';
+                sectionTitle.innerHTML = `<i class="fas fa-robot mr-3"></i> Análise e Sugestões (IA)`;
+                iaSection.appendChild(sectionTitle);
+                
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'text-gray-800 whitespace-pre-wrap'; // whitespace-pre-wrap para manter as quebras de linha
+                contentDiv.textContent = clientData.analiseIA;
+                iaSection.appendChild(contentDiv);
+
+                detailContent.appendChild(iaSection);
+            }
+
             // Renderiza o plano alimentar gerado
             if (clientData.planoAlimentarGerado) {
                 renderPlanoAlimentar(detailContent, clientData.planoAlimentarGerado, clientId);

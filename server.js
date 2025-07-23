@@ -258,6 +258,58 @@ function generateMealPlan(clientData, tabelaNutricional) {
     };
 }
 
+// Função para simular a análise da Anamnese por IA
+async function getAIAnalysis(clientData) {
+    console.log("Iniciando análise de IA para o cliente:", clientData.dadosGerais.nomeCompleto);
+
+    // Monta um prompt detalhado para a IA
+    const prompt = `
+        Analise a seguinte ficha de anamnese de um cliente de consultoria de dieta e treino.
+        Cliente: ${clientData.dadosGerais.nomeCompleto}, ${clientData.dadosGerais.idade} anos, sexo ${clientData.dadosGerais.sexo}.
+        Peso: ${clientData.dadosGerais.peso}kg, Altura: ${clientData.dadosGerais.altura}cm.
+        Objetivo principal: ${clientData.objetivoRotina.objetivo}.
+        Sintomas relatados: ${clientData.sintomasGerais.sintomas.join(', ')}.
+        Histórico de saúde: Usa hormônios? ${clientData.suplementosHormoniosHistorico.usouHormonios}. Efeitos colaterais relatados: ${clientData.suplementosHormoniosHistorico.efeitoColateral.join(', ')}.
+        Hábitos: Bebe ${clientData.habitosConsumos.aguaPorDia} de água. Intestino ${clientData.habitosConsumos.intestinoPreso === 'Sim' ? 'preso' : 'regular'}. Sono: ${clientData.emocionalComportamental.dormeBem === 'Sim' ? 'bom' : 'ruim'}.
+        Alergias: ${clientData.habitosAlimentares.alergias}.
+        Preferências: ${clientData.habitosAlimentares.preferenciaAlimentar}.
+        Alimentos que não gosta: ${clientData.habitosAlimentares.alimentosNaoGosta}.
+
+        Com base nesses dados, forneça uma análise concisa em 3 partes:
+        1.  **Análise de Perfil:** Um resumo do perfil do cliente, seus objetivos e principais desafios com base nos sintomas (ex: cansaço, vontade de doces, etc.).
+        2.  **Sugestões de Manipulados/Suplementos:** Com base nos sintomas e objetivos, sugira 2-3 manipulados ou suplementos, explicando brevemente o porquê de cada um (ex: para cansaço, sugerir Coenzima Q10; para intestino preso, sugerir um blend de fibras).
+        3.  **Otimização da Dieta:** Dê uma sugestão geral para otimizar a dieta com base nos dados (ex: aumentar a ingestão de fibras devido ao intestino preso, ou focar em proteínas para hipertrofia).
+
+        Formate a resposta em um texto corrido, usando quebras de linha. IMPORTANTE: Inclua um aviso no final de que a análise é uma sugestão gerada por IA e não substitui a avaliação de um profissional de saúde.
+    `;
+
+    // --- SIMULAÇÃO DE CHAMADA DE IA ---
+    // Em um cenário real, aqui você faria uma chamada para uma API como a do Google Gemini ou OpenAI.
+    // Por enquanto, vamos retornar um texto pré-definido para demonstrar a funcionalidade.
+    console.log("Prompt enviado para a IA (simulação):", prompt);
+    
+    // Exemplo de resposta da IA
+    const aiResponse = `
+**Análise de Perfil:**
+O cliente apresenta um perfil com objetivo de hipertrofia, mas relata sintomas como cansaço constante, vontade de doces e dores articulares, que podem dificultar o ganho de massa magra e a adesão à dieta. O histórico de uso de hormônios com efeitos colaterais como ginecomastia e queda de cabelo sugere uma possível sensibilidade ou desequilíbrio hormonal que precisa ser considerado.
+
+**Sugestões de Manipulados/Suplementos:**
+1.  **Coenzima Q10 (100mg):** Para combater o cansaço constante e melhorar a produção de energia celular, fundamental para os treinos.
+2.  **Blend de Fibras (Psyllium, Inulina):** Para auxiliar na regulação do intestino, que está preso, e melhorar a saciedade, ajudando a controlar a vontade de doces.
+3.  **Curcumina (500mg):** Possui forte ação anti-inflamatória, podendo ajudar com as dores articulares relatadas.
+
+**Otimização da Dieta:**
+Focar em uma maior ingestão de proteínas de alto valor biológico para suportar a hipertrofia. Aumentar o consumo de vegetais fibrosos em todas as refeições para melhorar a saúde intestinal e a saciedade. Considerar a inclusão de gorduras boas (abacate, castanhas) para a saúde hormonal.
+
+---
+*Aviso: Esta é uma análise gerada por computador e serve como sugestão. Não substitui a avaliação e o diagnóstico de um médico ou nutricionista.*
+    `;
+    // Simula um pequeno atraso de rede
+    await new Promise(resolve => setTimeout(resolve, 500)); 
+
+    return aiResponse;
+}
+
 // --- Configuração do Multer para Upload de Arquivos ---
 // Configuração de armazenamento para anamnese inicial (temporário, pois clientId ainda não existe)
 const initialAnamneseStorage = multer.diskStorage({
@@ -309,7 +361,7 @@ app.post('/salvar-dados', uploadInitialAnamnese.fields([
     { name: 'fotoFrenteInicial', maxCount: 1 },
     { name: 'fotoLadoInicial', maxCount: 1 },
     { name: 'fotoCostasInicial', maxCount: 1 }
-]), (req, res) => {
+]), async (req, res) => { // Transformada em async
     const novosDados = req.body;
     const files = req.files; // Arquivos enviados pelo Multer
     const filePath = path.join(__dirname, 'anamnese-data.json');
@@ -351,8 +403,11 @@ app.post('/salvar-dados', uploadInitialAnamnese.fields([
         }
     }
 
-    // Gera o plano alimentar (usando a função placeholder por enquanto)
+    // Gera o plano alimentar com base em regras
     novosDados.planoAlimentarGerado = generateMealPlan(novosDados, tabelaNutricional);
+
+    // **NOVO: Gera a análise com IA**
+    novosDados.analiseIA = await getAIAnalysis(novosDados);
 
     fs.readFile(filePath, 'utf8', (err, data) => {
         let todosOsDados = [];
@@ -375,7 +430,7 @@ app.post('/salvar-dados', uploadInitialAnamnese.fields([
                 console.error('Erro ao salvar o arquivo:', err);
                 return res.status(500).json({ message: 'Erro ao salvar os dados.' });
             }
-            console.log('Dados recebidos e salvos com sucesso!');
+            console.log('Dados recebidos e salvos com sucesso (incluindo análise de IA)!');
             res.status(200).json({ message: 'Dados recebidos com sucesso!', id: novosDados.id });
         });
     });
