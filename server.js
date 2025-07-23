@@ -4,6 +4,11 @@ const path = require('path');
 const multer = require('multer');
 const app = express();
 const PORT = 3000;
+const fetch = require('node-fetch'); // Importa node-fetch
+
+// Sua chave de API do Google Gemini (ATENÇÃO: Em produção, use variáveis de ambiente!)
+const GEMINI_API_KEY = 'AIzaSyCmQ-xWXfHZDGrUPYs4FGdmunVeRSbiZqs';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
 
 // Carregar a tabela nutricional
 let tabelaNutricional = [];
@@ -283,31 +288,39 @@ async function getAIAnalysis(clientData) {
         Formate a resposta em um texto corrido, usando quebras de linha. IMPORTANTE: Inclua um aviso no final de que a análise é uma sugestão gerada por IA e não substitui a avaliação de um profissional de saúde.
     `;
 
-    // --- SIMULAÇÃO DE CHAMADA DE IA ---
-    // Em um cenário real, aqui você faria uma chamada para uma API como a do Google Gemini ou OpenAI.
-    // Por enquanto, vamos retornar um texto pré-definido para demonstrar a funcionalidade.
-    console.log("Prompt enviado para a IA (simulação):", prompt);
-    
-    // Exemplo de resposta da IA
-    const aiResponse = `
-**Análise de Perfil:**
-O cliente apresenta um perfil com objetivo de hipertrofia, mas relata sintomas como cansaço constante, vontade de doces e dores articulares, que podem dificultar o ganho de massa magra e a adesão à dieta. O histórico de uso de hormônios com efeitos colaterais como ginecomastia e queda de cabelo sugere uma possível sensibilidade ou desequilíbrio hormonal que precisa ser considerado.
+    try {
+        const response = await fetch(GEMINI_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }]
+                }]
+            }),
+        });
 
-**Sugestões de Manipulados/Suplementos:**
-1.  **Coenzima Q10 (100mg):** Para combater o cansaço constante e melhorar a produção de energia celular, fundamental para os treinos.
-2.  **Blend de Fibras (Psyllium, Inulina):** Para auxiliar na regulação do intestino, que está preso, e melhorar a saciedade, ajudando a controlar a vontade de doces.
-3.  **Curcumina (500mg):** Possui forte ação anti-inflamatória, podendo ajudar com as dores articulares relatadas.
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Erro na API do Gemini:', response.status, errorData);
+            return `Erro ao gerar análise de IA: ${errorData.error.message || response.statusText}`;
+        }
 
-**Otimização da Dieta:**
-Focar em uma maior ingestão de proteínas de alto valor biológico para suportar a hipertrofia. Aumentar o consumo de vegetais fibrosos em todas as refeições para melhorar a saúde intestinal e a saciedade. Considerar a inclusão de gorduras boas (abacate, castanhas) para a saúde hormonal.
-
----
-*Aviso: Esta é uma análise gerada por computador e serve como sugestão. Não substitui a avaliação e o diagnóstico de um médico ou nutricionista.*
-    `;
-    // Simula um pequeno atraso de rede
-    await new Promise(resolve => setTimeout(resolve, 500)); 
-
-    return aiResponse;
+        const data = await response.json();
+        // Verifica se a resposta contém o texto gerado
+        if (data.candidates && data.candidates.length > 0 && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts.length > 0) {
+            return data.candidates[0].content.parts[0].text;
+        } else {
+            console.warn('Resposta da API do Gemini não contém texto gerado:', data);
+            return 'Não foi possível gerar a análise de IA. Resposta vazia ou inesperada.';
+        }
+    } catch (error) {
+        console.error('Erro ao chamar a API do Gemini:', error);
+        return `Erro de conexão com a IA: ${error.message}`;
+    }
 }
 
 // --- Configuração do Multer para Upload de Arquivos ---
