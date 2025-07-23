@@ -127,7 +127,12 @@ document.addEventListener('DOMContentLoaded', () => {
             renderSection(detailContent, 'Hábitos Alimentares', clientData.habitosAlimentares, 'fas fa-apple-alt');
             renderSection(detailContent, 'Observações Finais', clientData.observacoesFinais, 'fas fa-comment-dots');
 
-            // Exibe o histórico de acompanhamentos (mantido como estava, mas com classes Tailwind)
+            // Renderiza o plano alimentar gerado
+            if (clientData.planoAlimentarGerado) {
+                renderPlanoAlimentar(detailContent, clientData.planoAlimentarGerado, clientId);
+            }
+
+            // Exibe o histórico de acompanhamentos
             if (clientData.acompanhamentos && clientData.acompanhamentos.length > 0) {
                 const acompanhamentosTitle = document.createElement('h3');
                 acompanhamentosTitle.className = 'text-2xl font-bold text-gray-900 mb-4';
@@ -165,6 +170,83 @@ document.addEventListener('DOMContentLoaded', () => {
             showDetailView();
         }
     }
+
+    function renderPlanoAlimentar(parentEl, planoGerado, clientId) {
+        const planoDiv = document.createElement('div');
+        planoDiv.className = 'bg-blue-50 rounded-xl shadow-md p-6 mb-6 md:p-8';
+        planoDiv.innerHTML = `<h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center"><i class="fas fa-utensils mr-3"></i> Plano Alimentar Sugerido</h2>`;
+
+        planoGerado.planoAlimentar.forEach(refeicao => {
+            const refeicaoDiv = document.createElement('div');
+            refeicaoDiv.className = 'mb-4';
+            refeicaoDiv.innerHTML = `<h3 class="text-xl font-semibold text-blue-800">${refeicao.refeicao} (${refeicao.horario})</h3>`;
+            
+            const ul = document.createElement('ul');
+            ul.className = 'list-none pl-0';
+
+            refeicao.itens.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'flex justify-between items-center text-gray-700 py-1';
+                li.innerHTML = `<span>${item.alimento} (${item.quantidade})</span>`;
+
+                const swapButton = document.createElement('button');
+                swapButton.innerHTML = '<i class="fas fa-sync-alt"></i>';
+                swapButton.className = 'substitute-btn text-blue-500 hover:text-blue-700 transition-colors duration-200';
+                swapButton.dataset.clientId = clientId;
+                swapButton.dataset.refeicaoNome = refeicao.refeicao;
+                swapButton.dataset.alimentoNome = item.alimento;
+                
+                li.appendChild(swapButton);
+                ul.appendChild(li);
+            });
+
+            refeicaoDiv.appendChild(ul);
+            planoDiv.appendChild(refeicaoDiv);
+        });
+
+        parentEl.appendChild(planoDiv);
+    }
+
+    // Event listener para os botões de substituição
+    detailContent.addEventListener('click', function(event) {
+        const target = event.target.closest('.substitute-btn');
+        if (!target) return;
+
+        const { clientId, refeicaoNome, alimentoNome } = target.dataset;
+
+        if (confirm(`Deseja substituir ${alimentoNome} na refeição ${refeicaoNome}?`)) {
+            fetch('/api/substituir-alimento', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    clientId: clientId, 
+                    nomeRefeicao: refeicaoNome, 
+                    nomeAlimentoASubstituir: alimentoNome 
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message.includes('sucesso')) {
+                    // Atualiza os dados do cliente localmente
+                    const clientIndex = allClientData.findIndex(c => c.id === clientId);
+                    if (clientIndex !== -1) {
+                        allClientData[clientIndex].planoAlimentarGerado = data.planoAlimentarGerado;
+                    }
+                    // Re-renderiza a view de detalhes
+                    displayClientDetails(clientId);
+                    alert('Alimento substituído com sucesso!');
+                } else {
+                    alert(`Erro: ${data.message}`);
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao substituir alimento:', error);
+                alert('Ocorreu um erro na comunicação com o servidor.');
+            });
+        }
+    });
 
     function renderClientList(clients) {
         clientListContainer.innerHTML = ''; // Limpa a lista antiga

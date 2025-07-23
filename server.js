@@ -504,6 +504,108 @@ app.post('/salvar-acompanhamento', uploadAcompanhamento.fields([
     });
 });
 
+// Rota para substituir um alimento no plano
+app.post('/api/substituir-alimento', (req, res) => {
+    const { clientId, nomeRefeicao, nomeAlimentoASubstituir } = req.body;
+    const filePath = path.join(__dirname, 'anamnese-data.json');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ message: 'Erro ao ler o banco de dados.' });
+        }
+
+        let todosOsDados = JSON.parse(data);
+        const clientIndex = todosOsDados.findIndex(c => c.id === clientId);
+
+        if (clientIndex === -1) {
+            return res.status(404).json({ message: 'Cliente não encontrado.' });
+        }
+
+        const clientData = todosOsDados[clientIndex];
+        const planoGerado = clientData.planoAlimentarGerado;
+        const refeicao = planoGerado.planoAlimentar.find(r => r.refeicao === nomeRefeicao);
+
+        if (!refeicao) {
+            return res.status(404).json({ message: 'Refeição não encontrada.' });
+        }
+
+        const itemIndex = refeicao.itens.findIndex(item => item.alimento === nomeAlimentoASubstituir);
+        if (itemIndex === -1) {
+            return res.status(404).json({ message: 'Alimento não encontrado na refeição.' });
+        }
+
+        const alimentoOriginal = tabelaNutricional.find(item => item.nome === nomeAlimentoASubstituir);
+        if (!alimentoOriginal) {
+            return res.status(400).json({ message: 'Alimento original não encontrado na tabela nutricional.' });
+        }
+
+        // Lógica de filtragem para encontrar um substituto
+        const habitos = clientData.habitosAlimentares || {};
+        const alergiasCliente = habitos.alergias || [];
+        const preferenciaAlimentar = (habitos.preferenciaAlimentar || '').toLowerCase();
+        const alimentosNaoGosta = (habitos.alimentosNaoGosta || '')
+            .split(',')
+            .map(item => item.trim().toLowerCase())
+            .filter(item => item);
+
+        const substitutosPossiveis = tabelaNutricional.filter(item => {
+            const nomeAlimento = item.nome.toLowerCase();
+            if (item.nome === nomeAlimentoASubstituir) return false; // Não pode ser o mesmo alimento
+            if (item.categoria !== alimentoOriginal.categoria) return false; // Tem que ser da mesma categoria
+
+            // Re-aplicar filtros do cliente
+            if (alergiasCliente.includes('Glúten') && nomeAlimento.includes('glúten')) return false;
+            if (alergiasCliente.includes('Lactose') && nomeAlimento.includes('lactose')) return false;
+            if (preferenciaAlimentar === 'vegetariano' && (item.ptn_animal || 0) > 0) return false;
+            if (alimentosNaoGosta.length > 0 && alimentosNaoGosta.includes(nomeAlimento)) return false;
+
+            return true;
+        });
+
+        if (substitutosPossiveis.length === 0) {
+            return res.status(404).json({ message: 'Nenhum substituto adequado encontrado.' });
+        }
+
+        const novoAlimentoData = getRandomItem(substitutosPossiveis);
+        
+        // Criar o novo item para a refeição
+        const quantidade = novoAlimentoData.medida === 'g' ? '100g' : '1 unidade';
+        const ptn_animal = novoAlimentoData.ptn_animal || 0;
+        const ptn_vegetal = novoAlimentoData.ptn_vegetal || 0;
+        const cho = novoAlimentoData.cho || 0;
+        const fat = novoAlimentoData.fat || 0;
+        const kcal = (ptn_animal + ptn_vegetal) * 4 + cho * 4 + fat * 9;
+
+        const novoItem = {
+            alimento: novoAlimentoData.nome,
+            quantidade: quantidade,
+            medida: novoAlimentoData.medida,
+            macros: {
+                ptn_animal: parseFloat(ptn_animal.toFixed(2)),
+                ptn_vegetal: parseFloat(ptn_vegetal.toFixed(2)),
+                cho: parseFloat(cho.toFixed(2)),
+                fat: parseFloat(fat.toFixed(2)),
+                kcal: parseFloat(kcal.toFixed(2))
+            }
+        };
+
+        // Substituir o item antigo pelo novo
+        refeicao.itens[itemIndex] = novoItem;
+
+        // Recalcular os totais (simplificado: apenas do plano gerado)
+        // Uma implementação mais robusta recalcularia tudo a partir dos itens
+        // Por enquanto, vamos apenas atualizar o plano e deixar o frontend mostrar
+
+        fs.writeFile(filePath, JSON.stringify(todosOsDados, null, 2), (err) => {
+            if (err) {
+                return res.status(500).json({ message: 'Erro ao salvar o plano atualizado.' });
+            }
+            res.status(200).json({ message: 'Alimento substituído com sucesso!', planoAlimentarGerado: planoGerado });
+        });
+    });
+});
+
+
 // Inicia o servidor
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
