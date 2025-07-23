@@ -100,7 +100,7 @@ function generateMealPlan(clientData, tabelaNutricional) {
     const temAlergiaLactose = alergiasCliente.includes('Lactose');
 
     // Filtrar a tabela nutricional com base nas alergias
-    const tabelaNutricionalFiltrada = tabelaNutricional.filter(item => {
+    const tabelaNutricionalFinal = tabelaNutricional.filter(item => {
         const nomeAlimento = item.nome.toLowerCase();
         if (temAlergiaGluten && nomeAlimento.includes('glúten')) { // Simplificação: se o nome contém 'glúten'
             return false;
@@ -111,6 +111,18 @@ function generateMealPlan(clientData, tabelaNutricional) {
         // Adicionar mais regras de filtragem para outras alergias se necessário
         return true;
     });
+
+    // Obter preferências alimentares
+    const preferenciaAlimentar = clientData.habitosAlimentares && clientData.habitosAlimentares.preferenciaAlimentar ? clientData.habitosAlimentares.preferenciaAlimentar.toLowerCase() : '';
+
+    // Filtrar a tabela com base nas preferências
+    let tabelaNutricionalFinal = tabelaNutricionalFinal;
+    if (preferenciaAlimentar === 'vegetariano') {
+        tabelaNutricionalFinal = tabelaNutricionalFinal.filter(item => item.categoria !== 'PTN' || item.ptn_animal === 0);
+    } else if (preferenciaAlimentar === 'carnívoro') {
+        // Poderíamos futuramente dar preferência, mas por agora a exclusão é mais simples
+        // Exemplo: não fazer nada específico, apenas não ser vegetariano
+    }
 
     // Lógica de distribuição de macros por refeição (simplificada)
     // Por exemplo, distribuir igualmente entre as refeições principais
@@ -133,8 +145,8 @@ function generateMealPlan(clientData, tabelaNutricional) {
         // Lógica de seleção de alimentos por refeição (exemplo básico)
         if (refeicaoInfo.nome === "Desjejum") {
             // Exemplo: 1 proteína (PTN) e 1 carboidrato (CHO)
-            const proteinas = tabelaNutricionalFiltrada.filter(item => item.categoria === 'PTN');
-            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
+            const proteinas = tabelaNutricionalFinal.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricionalFinal.filter(item => item.categoria === 'CHO');
 
             if (proteinas.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(proteinas));
@@ -144,9 +156,9 @@ function generateMealPlan(clientData, tabelaNutricional) {
             }
         } else if (refeicaoInfo.nome === "Almoço" || refeicaoInfo.nome === "Jantar") {
             // Exemplo: 1 proteína (PTN), 1 carboidrato (CHO), 1 vegetal (VEGETAL/FOLHA)
-            const proteinas = tabelaNutricionalFiltrada.filter(item => item.categoria === 'PTN');
-            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
-            const vegetais = tabelaNutricionalFiltrada.filter(item => item.categoria === 'VEGETAL' || item.categoria === 'FOLHA');
+            const proteinas = tabelaNutricionalFinal.filter(item => item.categoria === 'PTN');
+            const carboidratos = tabelaNutricionalFinal.filter(item => item.categoria === 'CHO');
+            const vegetais = tabelaNutricionalFinal.filter(item => item.categoria === 'VEGETAL' || item.categoria === 'FOLHA');
 
             if (proteinas.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(proteinas));
@@ -159,8 +171,8 @@ function generateMealPlan(clientData, tabelaNutricional) {
             }
         } else { // Lanches
             // Exemplo: 1 carboidrato (CHO) ou 1 gordura (FAT)
-            const carboidratos = tabelaNutricionalFiltrada.filter(item => item.categoria === 'CHO');
-            const gorduras = tabelaNutricionalFiltrada.filter(item => item.categoria === 'FAT');
+            const carboidratos = tabelaNutricionalFinal.filter(item => item.categoria === 'CHO');
+            const gorduras = tabelaNutricionalFinal.filter(item => item.categoria === 'FAT');
 
             if (carboidratos.length > 0) {
                 alimentosParaRefeicao.push(getRandomItem(carboidratos));
