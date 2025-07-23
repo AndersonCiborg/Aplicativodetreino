@@ -94,35 +94,40 @@ function generateMealPlan(clientData, tabelaNutricional) {
         { nome: "Jantar", horario: "20:00" }
     ];
 
-    // Obter alergias do cliente
-    const alergiasCliente = clientData.habitosAlimentares && clientData.habitosAlimentares.alergias ? clientData.habitosAlimentares.alergias : [];
-    const temAlergiaGluten = alergiasCliente.includes('Glúten');
-    const temAlergiaLactose = alergiasCliente.includes('Lactose');
+    // --- INÍCIO DA LÓGICA DE FILTRAGEM DE ALIMENTOS ---
 
-    // Filtrar a tabela nutricional com base nas alergias
+    // Obter alergias, preferências e aversões do cliente
+    const habitos = clientData.habitosAlimentares || {};
+    const alergiasCliente = habitos.alergias || [];
+    const preferenciaAlimentar = (habitos.preferenciaAlimentar || '').toLowerCase();
+    const alimentosNaoGosta = (habitos.alimentosNaoGosta || '')
+        .split(',')
+        .map(item => item.trim().toLowerCase())
+        .filter(item => item); // Remove entradas vazias se houver
+
+    // Etapa 1, 2 e 3: Filtrar a tabela nutricional de uma só vez
     const tabelaNutricionalFinal = tabelaNutricional.filter(item => {
         const nomeAlimento = item.nome.toLowerCase();
-        if (temAlergiaGluten && nomeAlimento.includes('glúten')) { // Simplificação: se o nome contém 'glúten'
+
+        // Filtro de Alergias
+        if (alergiasCliente.includes('Glúten') && nomeAlimento.includes('glúten')) return false;
+        if (alergiasCliente.includes('Lactose') && nomeAlimento.includes('lactose')) return false;
+
+        // Filtro de Preferências (ex: vegetariano não come ptn animal)
+        if (preferenciaAlimentar === 'vegetariano' && (item.ptn_animal || 0) > 0) {
             return false;
         }
-        if (temAlergiaLactose && nomeAlimento.includes('lactose')) { // Simplificação: se o nome contém 'lactose'
+
+        // Filtro de Aversões (alimentos que não gosta)
+        if (alimentosNaoGosta.length > 0 && alimentosNaoGosta.includes(nomeAlimento)) {
             return false;
         }
-        // Adicionar mais regras de filtragem para outras alergias se necessário
-        return true;
+
+        return true; // Se passar por todos os filtros, mantém o alimento
     });
 
-    // Obter preferências alimentares
-    const preferenciaAlimentar = clientData.habitosAlimentares && clientData.habitosAlimentares.preferenciaAlimentar ? clientData.habitosAlimentares.preferenciaAlimentar.toLowerCase() : '';
+    // --- FIM DA LÓGICA DE FILTRAGEM ---
 
-    // Filtrar a tabela com base nas preferências
-    let tabelaNutricionalFinal = tabelaNutricionalFinal;
-    if (preferenciaAlimentar === 'vegetariano') {
-        tabelaNutricionalFinal = tabelaNutricionalFinal.filter(item => item.categoria !== 'PTN' || item.ptn_animal === 0);
-    } else if (preferenciaAlimentar === 'carnívoro') {
-        // Poderíamos futuramente dar preferência, mas por agora a exclusão é mais simples
-        // Exemplo: não fazer nada específico, apenas não ser vegetariano
-    }
 
     // Lógica de distribuição de macros por refeição (simplificada)
     // Por exemplo, distribuir igualmente entre as refeições principais
@@ -141,6 +146,7 @@ function generateMealPlan(clientData, tabelaNutricional) {
     refeicoes.forEach(refeicaoInfo => {
         const itensRefeicao = [];
         let macrosAtuaisRefeicao = { ptn_animal: 0, ptn_vegetal: 0, cho: 0, fat: 0, kcal: 0 };
+        let alimentosParaRefeicao = []; // Corrigido: inicializar aqui
 
         // Lógica de seleção de alimentos por refeição (exemplo básico)
         if (refeicaoInfo.nome === "Desjejum") {
@@ -206,11 +212,11 @@ function generateMealPlan(clientData, tabelaNutricional) {
                 }
             });
 
-            totalPtnAnimal += ptn_animal;
-            totalPtnVegetal += ptn_vegetal;
-            totalCho += cho;
-            totalFat += fat;
-            totalKcal += kcal;
+            macrosAtuaisRefeicao.ptn_animal += ptn_animal;
+            macrosAtuaisRefeicao.ptn_vegetal += ptn_vegetal;
+            macrosAtuaisRefeicao.cho += cho;
+            macrosAtuaisRefeicao.fat += fat;
+            macrosAtuaisRefeicao.kcal += kcal;
         });
 
         planoAlimentar.push({
